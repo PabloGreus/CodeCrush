@@ -1,0 +1,58 @@
+.caja {
+    background-color: white;
+    width: 300px;
+    margin: 100px auto;
+    padding: 20px;
+    border: 2px solid gray;
+}
+ body {
+      font-family: sans-serif;
+      display: flex;
+      justify-content: center;
+      padding: 40px 16px;
+      background-color: rgb(97, 91, 91);
+      font-family: Arial;
+    }
+ 
+    form {
+      width: 100%;
+      max-width: 360px;
+    }
+ 
+    h1 {
+      font-size: 22px;
+      margin-bottom: 24px;
+      color: darkblue;
+    }
+ 
+    label {
+      display: block;
+      font-size: 14px;
+      margin-bottom: 4px;
+    }
+ 
+    input {
+      display: block;
+      width: 100%;
+      padding: 8px;
+      font-size: 15px;
+      margin-bottom: 16px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+ 
+    button {
+      background-color: darkblue;
+      color: white;
+      width: 100%;
+      padding: 10px;
+      font-size: 15px;
+      cursor: pointer;
+    }
+ 
+    p {
+      font-size: 13px;
+      margin-top: 16px;
+      text-align: center;
+    }
