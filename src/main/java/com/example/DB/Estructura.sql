@@ -86,3 +86,60 @@ BEGIN
     SELECT CONCAT('Usuario ', p_id_usuario, ' eliminado correctamente') AS mensaje;
 END
 DELIMITER ;
+------------------------------------------------------------------------------------
+DELIMITER 
+
+CREATE PROCEDURE ContarMatches(IN p_id_usuario INT)
+BEGIN
+    SELECT 
+        u.id_usuario,
+        u.nombre,
+        COUNT(m.id_matches) AS total_matches
+    FROM usuario u
+    LEFT JOIN Matches m 
+        ON u.id_usuario = m.id_usuario1 
+        OR u.id_usuario = m.id_usuario2
+    WHERE u.id_usuario = p_id_usuario
+    GROUP BY u.id_usuario, u.nombre;
+END
+DELIMITER ;
+------------------------------------------------------------------------------------
+DELIMITER $$
+
+CREATE PROCEDURE CargarUsuario(
+    IN p_nombre      VARCHAR(255),
+    IN p_correo      VARCHAR(255),
+    IN p_bio         TEXT
+)
+BEGIN
+    IF p_nombre = '' OR p_nombre IS NULL THEN
+        SIGNAL SQLSTATE '45000'
+            SET MESSAGE_TEXT = 'El nombre no puede estar vacío';
+    END IF;
+
+    IF p_correo = '' OR p_correo IS NULL THEN
+        SIGNAL SQLSTATE '45000'
+            SET MESSAGE_TEXT = 'El correo no puede estar vacío';
+    END IF;
+
+    -- Verificar que el correo no esté ya registrado
+    IF EXISTS (SELECT 1 FROM usuario WHERE correo = p_correo) THEN
+        SIGNAL SQLSTATE '45000'
+            SET MESSAGE_TEXT = 'El correo ya está registrado';
+    END IF;
+
+    -- Insertar el nuevo usuario
+    INSERT INTO usuario (nombre, correo, bio)
+    VALUES (p_nombre, p_correo, p_bio);
+
+    -- Retornar el usuario creado
+    SELECT 
+        id_usuario,
+        nombre,
+        correo,
+        bio,
+        fecha_registro
+    FROM usuario
+    WHERE id_usuario = LAST_INSERT_ID();
+END$$
+DELIMITER ;

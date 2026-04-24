@@ -10,7 +10,7 @@ public class Main {
 
             Connection conexion = DriverManager.getConnection(Variables.url, Variables.user, Variables.password);
             Statement sentencia = conexion.createStatement();
-
+            
             String sql = "SELECT * FROM usuario";
             ResultSet resultado = sentencia.executeQuery(sql);
             
@@ -18,8 +18,10 @@ public class Main {
             while (resultado.next()) {
 
                 String nombre = resultado.getString("nombre");
+                String email = resultado.getString("correo");
                 
                 System.out.println(" | Nombre: " + nombre);
+                System.out.println(" | Email: " + email);
             }
             resultado.close();
             sentencia.close();
