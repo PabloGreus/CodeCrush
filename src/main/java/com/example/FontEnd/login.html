@@ -1,66 +1,52 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-    <title>Login</title>
-<style>
-    body {
-    background-color: rgb(97, 91, 91);
-    font-family: Arial;
-    }
-    
-    h1 {
-        text-align: center;
-        color: darkblue;
-    }
-    input {
-            width: 100%;
-            padding: 8px;
-            margin-top: 5px;
-            margin-bottom: 15px;
-        }
- 
-    button {
-        background-color: darkblue;
-        color: white;
-        padding: 10px;
-        width: 100%;
-        border: none;
-        cursor: pointer;
-        }
- 
-    button:hover {
-        background-color: blue;
-    }
- 
-    p {
-        font-size: 12px;
-        text-align: center;
-    }
- 
-    a {
-        color: darkblue;
-    }
-</style>
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CodeCrush – Iniciar Sesión</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
  
-    <div class="caja">
-        <h1>Iniciar Sesion</h1>
+    <div class="bg-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+    </div>
  
-        <form  id="formLogin" action="" method="post">
+    <div class="card">
  
-            <label>Usuario:</label><br>
-            <input type="text" placeholder="Escribe tu usuario"><br>
+        <a href="index.html" class="back-link">← Volver al inicio</a>
  
-            <label>Contraseña:</label><br>
-            <input type="password" placeholder="Escribe tu contraseña"><br>
+        <h1>Iniciar Sesión</h1>
+        <p class="subtitle">// Conecta y encuentra tu match</p>
  
-            <button type="submit">ENTRAR</button>
+        <form id="formLogin" action="" method="post">
+ 
+            <div class="field">
+                <label for="usuario">USUARIO</label>
+                <div class="input-wrap">
+                    <span class="input-icon">👤</span>
+                    <input type="text" id="usuario" name="usuario" placeholder="tu_usuario" required>
+                </div>
+            </div>
+ 
+            <div class="field">
+                <label for="password">CONTRASEÑA</label>
+                <div class="input-wrap">
+                    <span class="input-icon">🔒</span>
+                    <input type="password" id="password" name="password" placeholder="••••••••" required>
+                </div>
+            </div>
+ 
+            <button type="submit" class="btn-primary">→ ENTRAR</button>
  
         </form>
  
-        <p>¿No tienes cuenta? <a href="Registrer.html">Registrate aqui</a></p>
+        <hr class="divider">
+ 
+        <p class="footer-text">
+            ¿No tienes cuenta? <a href="Registrer.html">Regístrate aquí</a>
+        </p>
  
     </div>
  
