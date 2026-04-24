@@ -104,8 +104,7 @@ BEGIN
 END
 DELIMITER ;
 ------------------------------------------------------------------------------------
-DELIMITER $$
-
+DELIMITER 
 CREATE PROCEDURE CargarUsuario(
     IN p_nombre      VARCHAR(255),
     IN p_correo      VARCHAR(255),
@@ -141,5 +140,5 @@ BEGIN
         fecha_registro
     FROM usuario
     WHERE id_usuario = LAST_INSERT_ID();
-END$$
+END
 DELIMITER ;
