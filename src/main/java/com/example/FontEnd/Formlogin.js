@@ -1,4 +1,4 @@
-const BASE_URL = 'http://localhost:8080/api';
+const BASE_URL = 'http://localhost:8081/api';
 
 document.getElementById('formLogin').addEventListener('submit', function(event) {
     event.preventDefault();
@@ -17,7 +17,7 @@ document.getElementById('formLogin').addEventListener('submit', function(event) 
             alert('❌ ' + data.error);
         } else {
             alert('✅ Bienvenido, ' + data.nombre);
-            window.location.href = 'dashboard.html';
+            window.location.href = 'Dashboard.html';
         }
     })
     .catch(() => alert('No se pudo conectar.'));

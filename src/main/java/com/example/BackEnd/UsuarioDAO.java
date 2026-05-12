@@ -41,13 +41,13 @@ public class UsuarioDAO {
             return false;
         }
 
-        String sql = "INSERT INTO usuario (nombre, correo, password,) VALUES (?, ?, ?, )";
+        String sql = "INSERT INTO usuario (nombre, correo, password) VALUES (?, ?, ?)";
         try (Connection con = DriverManager.getConnection( Variables.url, Variables.user, Variables.password);
             PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
             ps.setString(1, usuario.getNombre());
-            ps.setString(4, usuario.getCorreo());
-            ps.setString(5, usuario.getPassword());
+            ps.setString(2, usuario.getCorreo());
+            ps.setString(3, usuario.getPassword());
 
             ps.executeUpdate();
 
@@ -89,7 +89,7 @@ public class UsuarioDAO {
     }
 
     public boolean eliminarUsuario(int id) throws SQLException {
-        String sql = "DELETE FROM usuarios WHERE id_usuario = ?";
+        String sql = "DELETE FROM usuario WHERE id_usuario = ?";
         try (Connection con = DriverManager.getConnection( Variables.url, Variables.user, Variables.password);
              PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, id);

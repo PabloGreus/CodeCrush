@@ -1,4 +1,4 @@
-const BASE_URL = 'http://localhost:8080/api';
+const BASE_URL = 'http://localhost:8081/api';
 
 const form = document.getElementById('FormRegistrer');
 
@@ -6,13 +6,15 @@ form.addEventListener('submit', function (event) {
     event.preventDefault();
 
     const nombre     = document.getElementById('nombre').value;
-    const email      = document.getElementById('correo').value;
-    const contraseña = document.getElementById('password').value; 
+    const correo   = document.getElementById('correo').value;
+    const password = document.getElementById('password').value; 
+    const Tecnologia = document.getElementById('Tecnologia').value;
+    const Bio = document.getElementById('Bio').value;
 
     fetch(BASE_URL + '/registro', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ nombre, email, contraseña })
+        body: JSON.stringify({ nombre: nombre, correo: correo, password: password, Tecnologia: Tecnologia, Bio: Bio })
     })
     .then(function (response) {
         return response.json();

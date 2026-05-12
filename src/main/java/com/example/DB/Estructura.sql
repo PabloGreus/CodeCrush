@@ -71,6 +71,21 @@ ALTER ON LoveCode.* TO 'Desarrollador@%';
 FLUSH PRIVILEGES;
 -- Creamos un usuario con permisos de desarrollador
 ------------------------------------------------------------------------------------
+
+
+---------------------------CREAMOS LOS PROCEDIMIENTOS ALMACENADOS---------------------------
+DELIMITER //
+CREATE PROCEDURE insertar_usuario(
+IN p_nombre VARCHAR(50),
+IN p_correo VARCHAR(50),
+IN p_bio TEXT,
+in p_password VARCHAR(50)
+)
+BEGIN
+INSERT INTO  usuario(nombre, correo, bio, password) Values (p_nombre, p_correo, p_bio, p_password);
+END //
+DELIMITER ;
+-------------------------------------------------------------------------------------------
 DELIMITER
 CREATE PROCEDURE BorrarUsuario(IN p_id_usuario INT)
 BEGIN
@@ -87,22 +102,21 @@ BEGIN
 END
 DELIMITER ;
 ------------------------------------------------------------------------------------
-DELIMITER 
-
-CREATE PROCEDURE ContarMatches(IN p_id_usuario INT)
-BEGIN
-    SELECT 
-        u.id_usuario,
-        u.nombre,
-        COUNT(m.id_matches) AS total_matches
-    FROM usuario u
-    LEFT JOIN Matches m 
-        ON u.id_usuario = m.id_usuario1 
-        OR u.id_usuario = m.id_usuario2
-    WHERE u.id_usuario = p_id_usuario
-    GROUP BY u.id_usuario, u.nombre;
-END
-DELIMITER ;
+--DELIMITER 
+--CREATE PROCEDURE ContarMatches(IN p_id_usuario INT)
+--BEGIN
+--    SELECT 
+--        u.id_usuario,
+--        u.nombre,
+--        COUNT(m.id_matches) AS total_matches
+--    FROM usuario u
+--    LEFT JOIN Matches m 
+--        ON u.id_usuario = m.id_usuario1 
+--        OR u.id_usuario = m.id_usuario2
+--    WHERE u.id_usuario = p_id_usuario
+--    GROUP BY u.id_usuario, u.nombre;
+--END
+--DELIMITER ;
 ------------------------------------------------------------------------------------
 DELIMITER 
 CREATE PROCEDURE CargarUsuario(
@@ -142,3 +156,4 @@ BEGIN
     WHERE id_usuario = LAST_INSERT_ID();
 END
 DELIMITER ;
+------------------------------------------------------------------------------------
