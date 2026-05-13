@@ -21,15 +21,15 @@ public class UsuarioController {
     public ResponseEntity<?> registrar(@RequestBody Map<String, String> body) {
         try {
             String nombre = body.get("nombre");
-            String email  = body.get("email");
-            String pass   = body.get("contraseña");
+            String correo  = body.get("correo");
+            String password   = body.get("password");
             String bio    = body.get("bio");
             String tecnologias = body.get("tecnologias");
 
-            if (nombre == null || email == null || pass == null || bio == null || tecnologias == null)
+            if (nombre == null || correo == null || password == null || bio == null || tecnologias == null)
                 return ResponseEntity.badRequest().body(Map.of("error", "Faltan campos"));
 
-            Usuario u = new Usuario(email, nombre, pass, bio, tecnologias);
+            Usuario u = new Usuario(correo, nombre, password, bio, tecnologias);
             boolean ok = dao.insertarUsuario(u);
 
             if (!ok)
@@ -45,7 +45,7 @@ public class UsuarioController {
     @PostMapping("/login")
         public ResponseEntity<?> login(@RequestBody Map<String, String> body) {
             try {
-                String correo = body.get("correo");    // ← recibe "correo"
+                String correo = body.get("correo"); 
                 String pass   = body.get("password");
 
                 if (correo == null || pass == null)

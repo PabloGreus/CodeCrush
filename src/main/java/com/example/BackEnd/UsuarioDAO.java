@@ -41,13 +41,15 @@ public class UsuarioDAO {
             return false;
         }
 
-        String sql = "INSERT INTO usuario (nombre, correo, password) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO usuario (nombre, correo, password, bio) VALUES (?, ?, ?, ?)";
         try (Connection con = DriverManager.getConnection( Variables.url, Variables.user, Variables.password);
             PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
             ps.setString(1, usuario.getNombre());
             ps.setString(2, usuario.getCorreo());
             ps.setString(3, usuario.getPassword());
+            ps.setString(4, usuario.getBio());
+            ps.setString(5, usuario.getTecnologias());
 
             ps.executeUpdate();
 

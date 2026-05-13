@@ -75,15 +75,16 @@ FLUSH PRIVILEGES;
 
 ---------------------------CREAMOS LOS PROCEDIMIENTOS ALMACENADOS---------------------------
 DELIMITER //
-CREATE PROCEDURE insertar_usuario(
+CREATE PROCEDURE insertar_usuario (
 IN p_nombre VARCHAR(50),
 IN p_correo VARCHAR(50),
 IN p_bio TEXT,
-in p_password VARCHAR(50)
+IN p_password VARCHAR(50),
+IN Tecnologia VARCHAR(50)
 )
 BEGIN
-INSERT INTO  usuario(nombre, correo, bio, password) Values (p_nombre, p_correo, p_bio, p_password);
-END //
+INSERT INTO  usuario(nombre, correo, bio, password) Values (nombre, correo, bio, password);
+END
 DELIMITER ;
 -------------------------------------------------------------------------------------------
 DELIMITER
