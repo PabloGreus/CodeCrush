@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -66,5 +67,32 @@ public class UsuarioController {
                 } catch (SQLException e) {
                     return ResponseEntity.internalServerError().body(Map.of("error", e.getMessage()));
                 }
-}
+    }
+
+    @GetMapping("/mostrarperfil")
+    public ResponseEntity<?> mostrarPerfil(@RequestBody Map<String, String> body) {
+        try {
+            String correo = body.get("correo");
+
+            if (correo == null)
+                return ResponseEntity.badRequest().body(Map.of("error", "Falta el correo"));
+
+            Usuario u = dao.obtenerUsuarioPorCorreo(correo);
+
+            if (u == null)
+                return ResponseEntity.status(404).body(Map.of("error", "Usuario no encontrado"));
+
+            return ResponseEntity.ok(Map.of(
+                "id", u.getId(),
+                "nombre", u.getNombre(),
+                "correo", u.getCorreo(),
+                "bio",    u.getBio()          != null ? u.getBio()          : "",
+                "tecnologias", u.getTecnologias() != null ? u.getTecnologias() : ""
+            ));
+
+        } catch (SQLException e) {
+            return ResponseEntity.internalServerError().body(Map.of("error", e.getMessage()));
+        }
+    }
+
 }
