@@ -1,23 +1,24 @@
-const form = document.getElementById('formLogin');
-form.addEventListener('submit', function (event) {
-    event .preventDefault();
-    const name = document.getElementById('nombre').value;
-    const contraseña = document.getElementById('contraseña').value;
+const BASE_URL = 'http://localhost:8080/api';
 
-    fetch('url'),{
+document.getElementById('formLogin').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    const correo   = document.getElementById('usuario').value;  // input id sigue siendo "usuario"
+    const password = document.getElementById('password').value;
+
+    fetch(BASE_URL + '/login', {
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ 
-            nombre:name,  
-            contraseña:contraseña 
-        })
-        .then(function (response) {
-            return response.json();
-        })
-        .then(function (data) {
-            console.log(data);
-        })
-    }
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ correo, password })  // ← clave "correo"
+    })
+    .then(r => r.json())
+    .then(data => {
+        if (data.error) {
+            alert('❌ ' + data.error);
+        } else {
+            alert('✅ Bienvenido, ' + data.nombre);
+            window.location.href = 'Dashboard.html';
+        }
+    })
+    .catch(() => alert('No se pudo conectar.'));
 });
