@@ -5,13 +5,14 @@ CREATE TABLE IF NOT exists usuario (
     id_usuario INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(255) NOT NULL,
     correo VARCHAR(255) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
     bio text,
     fecha_registro datetime not null default now()
 );
 -----------------------------------------------------------------------------------
 CREATE TABLE Tecnologia (
     id_tecnologia INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    nombre  VARCHAR(50)  NOT NULL UNIQUE,
+    nombre  VARCHAR(50)  NOT NULL UNIQUE
 );
 -----------------------------------------------------------------------------------
 CREATE TABLE Usuarios_Tecnologias (
@@ -158,3 +159,38 @@ BEGIN
 END
 DELIMITER ;
 ------------------------------------------------------------------------------------
+TRIGGER
+
+DELIMITER //
+CREATE PROCEDURE ObtenerMatches(
+    IN p_id_usuario INT
+)
+BEGIN
+    SELECT
+        m.id_matches,
+        m.fecha AS fecha_match,
+        CASE
+            WHEN m.id_usuario1 = p_id_usuario THEN m.id_usuario2
+            ELSE m.id_usuario1
+        END                                                       AS id_otro_usuario,
+        u.nombre                                                  AS nombre_otro_usuario,
+        u.correo                                                  AS correo_otro_usuario,
+        u.bio                                                     AS bio_otro_usuario,
+        GROUP_CONCAT(t.nombre ORDER BY t.nombre SEPARATOR ', ')   AS tecnologias_comunes
+    FROM Matches m
+    JOIN usuario u ON u.id_usuario = CASE
+                                         WHEN m.id_usuario1 = p_id_usuario THEN m.id_usuario2
+                                         ELSE m.id_usuario1
+                                     END
+    LEFT JOIN Usuarios_Tecnologia ut1 ON ut1.id_usuario     = p_id_usuario
+    LEFT JOIN Usuarios_Tecnologia ut2 ON ut2.id_usuario     = u.id_usuario
+                                      AND ut2.id_tecnologia  = ut1.id_tecnologia
+    LEFT JOIN Tecnologia t            ON t.id_tecnologia    = ut1.id_tecnologia
+                                      AND ut2.id_tecnologia IS NOT NULL
+    WHERE m.id_usuario1 = p_id_usuario
+       OR m.id_usuario2 = p_id_usuario
+    GROUP BY m.id_matches, m.fecha, id_otro_usuario, u.nombre, u.correo, u.bio
+    ORDER BY m.fecha DESC;
+END //
+ 
+DELIMITER ;

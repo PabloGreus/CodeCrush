@@ -273,12 +273,12 @@ public class UsuarioDAO {
     }
 
     protected Usuario mapear(ResultSet rs) throws SQLException {
-        Usuario u = new Usuario();
-        u.setId(rs.getInt("id_usuario"));
-        u.setNombre(rs.getString("nombre"));
-        u.setCorreo(rs.getString("correo"));
-        u.setBio(rs.getString("bio"));
-        return u;
+    Usuario u = new Usuario();
+    u.setId(rs.getInt("id_usuario"));
+    u.setNombre(rs.getString("nombre"));
+    u.setCorreo(rs.getString("correo"));
+    u.setBio(rs.getString("bio"));
+    return u;
     }
 
     public boolean eliminarUsuario(int id) throws SQLException {
@@ -302,4 +302,29 @@ public class UsuarioDAO {
         }
     }
 
+    public List<Usuario> obtenerTodosLosUsuarios() throws SQLException {
+    List<Usuario> lista = new ArrayList<>();
+    String sql = """
+        SELECT u.id_usuario, u.nombre, u.correo, u.bio,
+               GROUP_CONCAT(t.nombre SEPARATOR ', ') AS tecnologias
+        FROM usuario u
+        LEFT JOIN Usuarios_Tecnologias ut ON u.id_usuario = ut.id_usuario
+        LEFT JOIN Tecnologia t ON ut.id_tecnologia = t.id_tecnologia
+        GROUP BY u.id_usuario
+        """;
+    try (Connection con = DriverManager.getConnection(Variables.url, Variables.user, Variables.password);
+         PreparedStatement ps = con.prepareStatement(sql);
+         ResultSet rs = ps.executeQuery()) {
+        while (rs.next()) {
+            Usuario u = new Usuario();
+            u.setId(rs.getInt("id_usuario"));
+            u.setNombre(rs.getString("nombre"));
+            u.setCorreo(rs.getString("correo"));
+            u.setBio(rs.getString("bio"));
+            u.setTecnologias(rs.getString("tecnologias"));
+            lista.add(u);
+        }
+    }
+    return lista;
+    }
 }

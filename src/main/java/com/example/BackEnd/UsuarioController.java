@@ -1,6 +1,7 @@
 package com.example.BackEnd;
 
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
@@ -95,4 +96,13 @@ public class UsuarioController {
         }
     }
 
+    @GetMapping("/usuarios")
+        public ResponseEntity<?> listarUsuarios() {
+        try {
+            List<Usuario> lista = dao.obtenerTodosLosUsuarios();
+            return ResponseEntity.ok(lista);
+        } catch (SQLException e) {
+            return ResponseEntity.internalServerError().body(Map.of("error", e.getMessage()));
+        }
+    }
 }
