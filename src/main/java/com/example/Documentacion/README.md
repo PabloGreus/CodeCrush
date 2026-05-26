@@ -10,16 +10,12 @@
 -[Descripcion](#Descripcion)
 -[Caracteristicas principales](#Características-principales)
 -[Tecnologias Utilizadas](#Tecnologias-utilizadas)
+-[Funcionamiento](#funcionamiento)
 ***
 ## Características principales
 
-- Gestión de usuarios (alumnos y profesores): alta, listado, baja y modificación.
-- Reserva de puestos por usuario, aula/sala y franja horaria, con opción de liberar puestos.
-- Visualización del estado de los puestos (libres/ocupados) por sala.
-- Préstamo y devolución de equipos (portátiles/tablets), cálculo de retrasos y lista de préstamos activos y retrasados.
-- Persistencia completa en base de datos relacional (MySQL).
-- Exportación de reservas y préstamos a ficheros XML y consultas XPath para estadísticas.
-- Menús de texto claros para la interacción con el usuario.
+- Gestion de altas y bajas de usuarios.
+- 
 ***
 ## Tecnologias utilizadas
 
@@ -30,3 +26,10 @@
 - Ficheros: XML para exportación de datos e informes, consultas mediante XPath.
 
 - Control de versiones: Git y GitHub (uso obligatorio para el desarrollo del proyecto).
+
+***
+## Funcionamiento
+
+- Necesario tener el Framework Spring-Boot corriendo, El docker o maquina virtual con la database coriendo.
+
+
