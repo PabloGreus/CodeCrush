@@ -71,7 +71,7 @@ public class MachDAO {
                 u.correo,
                 u.bio,
                 GROUP_CONCAT(t.nombre SEPARATOR ', ') AS tecnologias
-            FROM matches m
+            FROM Matches m
             JOIN usuario u ON u.id_usuario = CASE
                 WHEN m.id_usuario1 = ? THEN m.id_usuario2
                 ELSE m.id_usuario1
