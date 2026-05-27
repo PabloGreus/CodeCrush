@@ -16,6 +16,9 @@ document.getElementById('formLogin').addEventListener('submit', function(event) 
         if (data.error) {
             alert('❌ ' + data.error);
         } else {
+            localStorage.setItem('userId',     data.id);
+            localStorage.setItem('userNombre', data.nombre);
+            localStorage.setItem('userCorreo', data.correo);
             alert('✅ Bienvenido, ' + data.nombre);
             window.location.href = 'Dashboard.html';
         }

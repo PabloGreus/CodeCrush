@@ -159,8 +159,6 @@ BEGIN
 END
 DELIMITER ;
 ------------------------------------------------------------------------------------
-TRIGGER
-
 DELIMITER //
 CREATE PROCEDURE ObtenerMatches(
     IN p_id_usuario INT
@@ -193,4 +191,31 @@ BEGIN
     ORDER BY m.fecha DESC;
 END //
  
+DELIMITER ;
+-------------------------TRIGGERS-------------------------
+DELIMITER //
+CREATE TRIGGER after_like_insert
+AFTER INSERT ON Likes
+FOR EACH ROW
+BEGIN
+    -- Comprueba si el receptor ya le había dado like al emisor
+    IF EXISTS (
+        SELECT 1 FROM Likes
+        WHERE id_emisor  = NEW.id_receptor
+          AND id_receptor = NEW.id_emisor
+    ) THEN
+        -- Evita duplicados antes de insertar el match
+        IF NOT EXISTS (
+            SELECT 1 FROM Matches
+            WHERE (id_usuario1 = LEAST(NEW.id_emisor, NEW.id_receptor)
+               AND id_usuario2 = GREATEST(NEW.id_emisor, NEW.id_receptor))
+        ) THEN
+            INSERT INTO Matches (id_usuario1, id_usuario2)
+            VALUES (
+                LEAST(NEW.id_emisor, NEW.id_receptor),
+                GREATEST(NEW.id_emisor, NEW.id_receptor)
+            );
+        END IF;
+    END IF;
+END //
 DELIMITER ;

@@ -13,7 +13,7 @@ public class LikeDAO {
         // Evitar like duplicado
         if (yaExisteLike(origen, destino)) return false;
 
-        String sql = "INSERT INTO likes (id_origen, id_destino) VALUES (?, ?)";
+        String sql = "INSERT INTO Likes (id_emisor, id_receptor) VALUES (?, ?)";
         try (Connection con = DriverManager.getConnection(Variables.url, Variables.user, Variables.password);
              PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             ps.setInt(1, origen);
@@ -30,7 +30,7 @@ public class LikeDAO {
     }
 
     public boolean yaExisteLike(int origen, int destino) throws SQLException {
-        String sql = "SELECT COUNT(*) FROM likes WHERE id_origen = ? AND id_destino = ?";
+        String sql = "SELECT COUNT(*) FROM Likes WHERE id_emisor = ? AND id_receptor = ?";
         try (Connection con = DriverManager.getConnection(Variables.url, Variables.user, Variables.password);
              PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, origen);
@@ -43,7 +43,7 @@ public class LikeDAO {
 
     public List<Integer> obtenerLikesRecibidos(int idUsuario) throws SQLException {
         List<Integer> lista = new ArrayList<>();
-        String sql = "SELECT id_origen FROM likes WHERE id_destino = ?";
+        String sql = "SELECT id_emisor FROM Likes WHERE id_receptor = ?";
         try (Connection con = DriverManager.getConnection(Variables.url, Variables.user, Variables.password);
              PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, idUsuario);
