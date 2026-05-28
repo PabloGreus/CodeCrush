@@ -61,8 +61,8 @@ CREATE TABLE Matches (
         REFERENCES usuario(id_usuario) ON DELETE CASCADE
 );
 -----------------------------------------------------------------------------------
-Create user 'lector@%' IDENTIFIED BY 'lector';
-GRANT SELECT ON LoveCode.* TO 'lector@%';
+CREATE USER 'lector'@'%' IDENTIFIED BY 'lector';
+GRANT SELECT ON LoveCode.* TO 'lector'@'%';
 FLUSH PRIVILEGES;
 -- Creamos un usuario solo lectura.
 -----------------------------------------------------------------------------------

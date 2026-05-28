@@ -12,7 +12,7 @@ Aplicación web de matching para desarrolladores. Regístrate con tus tecnologí
 |------|-----------|
 | Frontend | HTML5 · CSS3 · JavaScript ES6+ (vanilla) |
 | Backend | Java 17 · Spring Boot 3.x |
-| Base de datos | MariaDB 11.8 (Docker) |
+| Base de datos | MySQL 11.8 (Docker) |
 | Contenedores | Docker / Docker Compose |
  
 ---
@@ -75,7 +75,7 @@ codecrush/
 docker-compose up -d
 ```
  
-Esto arranca MariaDB en el puerto **3306** con las siguientes credenciales:
+Esto arranca MySQL en el puerto **3306** con las siguientes credenciales:
  
 | Parámetro | Valor |
 |-----------|-------|
@@ -97,7 +97,7 @@ mysql -h localhost -u root -proot LoveCode < LoveCodeDump.sql
  
 ### 3. Arrancar el backend
  
-Desde el IDE (IntelliJ / Eclipse) ejecuta la clase `Main.java`, o desde la terminal:
+Desde el IDE (VS / Eclipse) ejecuta la clase `Main.java`, o desde la terminal:
  
 ```bash
 mvn spring-boot:run
