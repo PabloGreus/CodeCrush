@@ -53,7 +53,7 @@ codecrush/
 │   └── LoveCodeDump.sql      # Dump de la BD con datos de prueba
 │
 └── 📂dockerDatabase 
-    └── docker-compose.yaml    # Levanta MariaDB en Docker
+    └── docker-compose.yaml    # Levanta MySQL en Docker
 
 ```
  
